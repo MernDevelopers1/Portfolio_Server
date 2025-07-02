@@ -17,11 +17,14 @@ const userSchema = zod.object({
   role: zod.string().optional(),
 });
 
-export const validateUser = (user: IUser): boolean => {
+export const validateUser = (
+  user: IUser
+): { success: boolean; error: string } => {
   const result = userSchema.safeParse(user);
-  console.log("result :>> ", result);
-  return result.success;
-  return true;
+  return {
+    success: result.success,
+    error: result.error?.message || "",
+  };
 };
 export const validateUserUpdate = (user: Partial<IUser>): boolean => {
   if (user.email && user.email.indexOf("@") === -1) {

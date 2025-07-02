@@ -6,6 +6,7 @@ import {
   getUserByIdService,
   updateUserService,
 } from "../services/user.service";
+import { hashPassword } from "../utils/HashPassword";
 
 export const getAllUsers = async (
   req: Request,
@@ -42,6 +43,8 @@ export const createUser = async (
 ) => {
   try {
     const userData = req.body;
+    const HashedPassword = await hashPassword(userData.password);
+    userData.password = HashedPassword;
     const newUser = await createUserService(userData);
     res.status(201).json(newUser);
   } catch (error) {

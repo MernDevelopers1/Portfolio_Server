@@ -10,8 +10,11 @@ export const validateUserMiddleware = (
   const user: IUser = req.body;
 
   try {
-    if (!validateUser(user)) {
-      res.status(400).json({ error: "Invalid user data" });
+    const { success, error } = validateUser(user);
+    if (!success) {
+      res.status(400).json({
+        error: JSON.parse(error)?.[0]?.message || "Invalid user data",
+      });
       return; // ✅ Fix: ensure function returns here
     }
 
