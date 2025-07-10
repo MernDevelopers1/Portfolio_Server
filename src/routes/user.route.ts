@@ -12,15 +12,15 @@ import { asyncHandler } from "../utils/AsyncHandler";
 
 const router = express.Router();
 
-router.get("/users/", asyncHandler(getAllUsers), errorHandler);
-router.get("/users/:id", asyncHandler(getUserById), errorHandler);
+router.get("/", asyncHandler(getAllUsers), errorHandler);
+router.get("/:id", asyncHandler(getUserById), errorHandler);
 router.post(
-  "/users/",
+  "/",
   validateUserMiddleware,
   asyncHandler(createUser),
   errorHandler
 );
-router.patch("/users/:id", asyncHandler(updateUser), errorHandler);
-router.delete("/users/:id", asyncHandler(deleteUser), errorHandler);
+router.patch("/:id", asyncHandler(updateUser), errorHandler);
+router.delete("/:id", asyncHandler(deleteUser), errorHandler);
 
 export default router;

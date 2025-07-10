@@ -8,7 +8,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api", userRoutes, authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/auth", authRoutes);
 app.use(errorHandler);
 
 export default app;
