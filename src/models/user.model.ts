@@ -7,6 +7,11 @@ const userSchema = new Schema<IUserSchema>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: String,
+    LoginMethod: {
+      type: String,
+      enum: ["local", "google", "github", "facebook"],
+      default: "local",
+    },
     phone: String,
     address: String,
     isDeleted: { type: Boolean, default: false },

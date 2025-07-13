@@ -1,4 +1,4 @@
-export const generateToken = (userId: string): string => {
+export const generateToken = (userId: string | undefined): string => {
   const jwt = require("jsonwebtoken");
   const secretKey = process.env.JWT_SECRET || "defaultSecretKey";
   const token = jwt.sign({ id: userId }, secretKey, {

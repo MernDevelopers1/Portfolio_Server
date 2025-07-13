@@ -45,6 +45,7 @@ export const createUser = async (
     const userData = req.body;
     const HashedPassword = await hashPassword(userData.password);
     userData.password = HashedPassword;
+    userData.LoginMethod = "local"; // Default to local login method
     const newUser = await createUserService(userData);
     res.status(201).json(newUser);
   } catch (error) {

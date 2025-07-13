@@ -41,6 +41,7 @@ export interface IUser {
   name: string;
   email: string;
   password?: string;
+  LoginMethod?: "local" | "google" | "github" | "facebook";
   phone?: string;
   address?: string;
   isDeleted?: boolean;
