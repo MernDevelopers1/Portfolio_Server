@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { loginService } from "../services/auth.service";
-import { generateToken } from "../utils/generateToken";
+import { generateToken, verifyToken } from "../utils/generateToken";
 import { IUserSchema } from "../types/user";
 import {
   createUserService,
   findUserByEmailService,
+  getUserByIdService,
 } from "../services/user.service";
 import { GoogleProfile } from "../types/auth";
 
@@ -38,6 +39,30 @@ export const loginController = async (
       user: user,
       token: Token,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+export const verifyTokenController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    console.log("token :>> ", token);
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+    const userId = await verifyToken(token);
+    if (!userId) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    const user = await getUserByIdService(userId.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "Token is valid", user });
   } catch (error) {
     next(error);
   }

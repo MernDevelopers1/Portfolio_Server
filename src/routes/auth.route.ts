@@ -4,6 +4,7 @@ import {
   googleLoginController,
   loginController,
   logoutController,
+  verifyTokenController,
 } from "../controllers/auth.controller";
 import { asyncHandler } from "../utils/AsyncHandler";
 import passport from "passport";
@@ -44,6 +45,7 @@ router.get(
     failureRedirect: `${process.env.FRONTEND_URL}/login`,
   })
 );
+router.get("/verifyToken", asyncHandler(verifyTokenController), errorHandler);
 router.post("/login", asyncHandler(loginController), errorHandler);
 router.get("/logout", asyncHandler(logoutController), errorHandler);
 
