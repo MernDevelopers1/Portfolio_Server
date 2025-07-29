@@ -5,7 +5,8 @@ import { IUserSchema } from "../types/user";
 const userSchema = new Schema<IUserSchema>(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, unique: true },
+    username: { type: String, unique: true },
     password: String,
     LoginMethod: {
       type: String,

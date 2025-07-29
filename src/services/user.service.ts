@@ -9,6 +9,11 @@ export const findUserByEmailService = async (
 ): Promise<IUserSchema | null> => {
   return await User.findOne({ email });
 };
+export const findUserByUsernameService = async (
+  username: string
+): Promise<IUserSchema | null> => {
+  return await User.findOne({ username });
+};
 export const getUserByIdService = async (
   id: string
 ): Promise<IUserSchema | null> => {

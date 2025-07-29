@@ -1,6 +1,8 @@
 import express from "express";
 import errorHandler from "../middlewares/errorHandler";
 import {
+  facebookLoginController,
+  githubLoginController,
   googleLoginController,
   loginController,
   logoutController,
@@ -22,17 +24,18 @@ router.get(
   asyncHandler(googleLoginController)
 );
 
-// router.get(
-//   "/facebook",
-//   passport.authenticate("facebook", { scope: ["email"] })
-// );
-// router.get(
-//   "/facebook/callback",
-//   passport.authenticate("facebook", {
-//     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
-//     failureRedirect: `${process.env.FRONTEND_URL}/login`,
-//   })
-// );
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["email"] })
+);
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    session: false,
+    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+  }),
+  asyncHandler(facebookLoginController)
+);
 
 router.get(
   "/github",
@@ -41,9 +44,10 @@ router.get(
 router.get(
   "/github/callback",
   passport.authenticate("github", {
-    successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
+    session: false,
     failureRedirect: `${process.env.FRONTEND_URL}/login`,
-  })
+  }),
+  asyncHandler(githubLoginController)
 );
 router.get("/verifyToken", asyncHandler(verifyTokenController), errorHandler);
 router.post("/login", asyncHandler(loginController), errorHandler);

@@ -18,29 +18,29 @@ passport.use(
   )
 );
 
-// passport.use(
-//   new FacebookStrategy(
-//     {
-//       clientID: process.env.FACEBOOK_CLIENT_ID!,
-//       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-//       callbackURL: `${process.env.SERVER_URL}/auth/facebook/callback`,
-//       profileFields: ["id", "emails", "name"],
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       console.log("accessToken :>> ", accessToken);
-//       console.log("refreshToken :>> ", refreshToken);
-//       console.log("profile :>> ", profile);
-//       done(null, profile);
-//     }
-//   )
-// );
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+      callbackURL: `${process.env.SERVER_URL}/auth/facebook/callback`,
+      profileFields: ["id", "emails", "name"],
+    },
+    (accessToken, refreshToken, profile, done) => {
+      console.log("accessToken :>> ", accessToken);
+      console.log("refreshToken :>> ", refreshToken);
+      console.log("profile :>> ", profile);
+      done(null, profile);
+    }
+  )
+);
 
 passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      callbackURL: `${process.env.SERVER_URL}/auth/github/callback`,
+      callbackURL: `${process.env.SERVER_URL}/api/auth/github/callback`,
     },
     (
       accessToken: string,

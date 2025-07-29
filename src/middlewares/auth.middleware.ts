@@ -1,6 +1,7 @@
 import { validateUser } from "../validators/user.validator";
 import { Request, Response, NextFunction } from "express";
 import { IUser } from "../types/user";
+import { sendResponse } from "../utils/response";
 
 export const validateUserMiddleware = (
   req: Request,
@@ -12,8 +13,11 @@ export const validateUserMiddleware = (
   try {
     const { success, error } = validateUser(user);
     if (!success) {
-      res.status(400).json({
+      sendResponse(res, {
         error: JSON.parse(error)?.[0]?.message || "Invalid user data",
+        statusCode: 400,
+        success: false,
+        message: "Validation failed",
       });
       return; // ✅ Fix: ensure function returns here
     }
@@ -21,9 +25,19 @@ export const validateUserMiddleware = (
     next(); // ✅ Now TypeScript is happy (function returns void)
   } catch (error) {
     if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
+      sendResponse(res, {
+        error: error.message,
+        statusCode: 400,
+        success: false,
+        message: "An error occurred during validation",
+      });
     } else {
-      res.status(400).json({ error: "An unknown error occurred" });
+      sendResponse(res, {
+        error: "An unknown error occurred",
+        statusCode: 400,
+        success: false,
+        message: "An unknown error occurred",
+      });
     }
     return; // ✅ Explicitly return after sending response
   }

@@ -39,7 +39,9 @@ interface Banner {
 export interface IUser {
   _id?: string;
   name: string;
-  email: string;
+  email?: string;
+  username?: string;
+  profilePicture?: string;
   password?: string;
   LoginMethod?: "local" | "google" | "github" | "facebook";
   phone?: string;
